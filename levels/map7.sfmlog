@@ -1,0 +1,75 @@
+defmac MapInit
+    mac LoadSize 24 14
+
+    mac LoadTile $O_WALL 5 11
+    mac LoadTile $O_WALL 5 10
+    mac LoadTile $O_WALL 5 9
+    mac LoadTile $O_WALL 5 8
+    mac LoadTile $O_WALL 5 7
+    mac LoadTile $O_WALL 5 6
+    mac LoadTile $O_WALL 5 5
+    mac LoadTile $O_WALL 5 4
+    mac LoadTile $O_WALL 5 3
+    mac LoadTile $O_WALL 5 2
+    mac LoadTile $O_WALL 6 11
+    mac LoadTile $O_GRASS 6 8
+    mac LoadTile $O_GRASS 6 5
+    mac LoadTile $O_WALL 6 2
+    mac LoadTile $O_WALL 7 11
+    mac LoadTile $N_BABA 7 9
+    mac LoadTile $O_GRASS 7 4
+    mac LoadTile $O_WALL 7 2
+    mac LoadTile $O_WALL 8 11
+    mac LoadTile $W_IS 8 9
+    mac LoadTile $O_WALL 8 2
+    mac LoadTile $O_WALL 9 11
+    mac LoadTile $P_YOU 9 9
+    mac LoadTile $O_BABA 9 6
+    mac LoadTile $O_WALL 9 2
+    mac LoadTile $O_WALL 10 11
+    mac LoadTile $O_GRASS 10 10
+    mac LoadTile $O_GRASS 10 3
+    mac LoadTile $O_WALL 10 2
+    mac LoadTile $O_WALL 11 11
+    mac LoadTile $O_WALL 11 2
+    mac LoadTile $O_WALL 12 11
+    mac LoadTile $O_GRASS 12 6
+    mac LoadTile $O_GRASS 12 5
+    mac LoadTile $O_GRASS 12 4
+    mac LoadTile $O_WALL 12 2
+    mac LoadTile $O_WALL 13 11
+    mac LoadTile $O_GRASS 13 8
+    mac LoadTile $O_GRASS 13 3
+    mac LoadTile $O_WALL 13 2
+    mac LoadTile $O_WALL 14 11
+    mac LoadTile $O_GRASS 14 7
+    mac LoadTile $N_FLAG 14 5
+    mac LoadTile $O_WALL 14 2
+    mac LoadTile $O_WALL 15 11
+    mac LoadTile $O_GRASS 15 6
+    mac LoadTile $O_GRASS 15 4
+    mac LoadTile $O_WALL 15 2
+    mac LoadTile $O_WALL 16 11
+    mac LoadTile $O_FLAG 16 9
+    mac LoadTile $O_GRASS 16 7
+    mac LoadTile $P_WIN 16 5
+    mac LoadTile $O_WALL 16 2
+    mac LoadTile $O_WALL 17 11
+    mac LoadTile $O_GRASS 17 6
+    mac LoadTile $O_WALL 17 2
+    mac LoadTile $O_WALL 18 11
+    mac LoadTile $O_WALL 18 10
+    mac LoadTile $O_WALL 18 9
+    mac LoadTile $O_WALL 18 8
+    mac LoadTile $O_WALL 18 7
+    mac LoadTile $O_WALL 18 6
+    mac LoadTile $O_WALL 18 5
+    mac LoadTile $O_WALL 18 4
+    mac LoadTile $O_WALL 18 3
+    mac LoadTile $O_WALL 18 2
+    mac LoadTile $N_GRASS 23 7
+    mac LoadTile $W_IS 23 6
+    mac LoadTile $P_STOP 23 5
+end
+
+mac AddMap MapInit

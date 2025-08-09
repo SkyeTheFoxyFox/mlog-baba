@@ -1,0 +1,1314 @@
+
+import constants.sfmlog
+import letters.sfmlog
+
+pop log $LOG2 2
+
+defmac LoadSize x y
+    if equal y null
+        pset y x
+    end
+    pset $LOCAL_MAP_SIZE_X x
+    pset $LOCAL_MAP_SIZE_Y y
+    write x $COMM_CELL $COMM_LOAD_SIZE_X
+    write y $COMM_CELL $COMM_LOAD_SIZE_Y
+end
+
+defmac LoadTile tile x y
+    pop mul idx y $LOCAL_MAP_SIZE_X
+    pop add idx idx x
+    write tile $MAP_CELL idx
+end
+
+defmac LoadMap id
+    print "[pink]BABA[white] IS [pink]YOU[lightgray]\nLogic by:\n[darkgray]SkyeThe[sky]FoxyFox[lightgray]\n\nLoading..."
+    printflush $MESSAGE
+    mac ClearMap
+    write 0 $COMM_CELL $COMM_LOAD_BUSY
+    write id $COMM_CELL $COMM_LOAD_ID
+    Loop:
+    read status $COMM_CELL $COMM_LOAD_BUSY
+    jump Loop equal status 0
+    read $MAP_SIZE_X $COMM_CELL $COMM_LOAD_SIZE_X
+    read $MAP_SIZE_Y $COMM_CELL $COMM_LOAD_SIZE_Y
+    op mul $MAP_AREA $MAP_SIZE_X $MAP_SIZE_Y
+    mac ClearCounts
+    mac ClearMapChangeCell
+    mac InitProcessMap
+    set $textChanged true
+    print "[pink]BABA[white] IS [pink]YOU[lightgray]\nLogic by:\n[darkgray]SkyeThe[sky]FoxyFox[lightgray]\n\nLevel:[white] "
+    print id
+    printflush $MESSAGE
+    jump NoEnd notEqual id $MAP_COUNT
+        print "Congratulations, you win :3\n\nThanks for playing my\nMLOG remake of BABA is YOU\n\nCreated by SkyeTheFoxyFox"
+        draw col $COLOR_WHITE
+        pop div displayCenter $DISPLAY_SIZE 2
+        pop add displayCenter displayCenter $DISPLAY_BORDER
+        strvar unscoped center "center"
+        draw print displayCenter displayCenter center
+        drawflush $DISPLAY
+    NoEnd:
+end
+
+pset $MAP_COUNT 0
+defmac AddMap MapMac
+    pop idiv procx $MAP_COUNT 13
+    pop add procx procx 18
+    pop mod procy $MAP_COUNT 13
+    pop add procy procy 6
+    pop add $MAP_COUNT $MAP_COUNT 1
+    pset $_AddMap_MapMac MapMac
+    proc _ @world-processor procx procy
+        Top:
+        read selectedId $COMM_CELL $COMM_LOAD_ID
+        jump Top notEqual selectedId $MAP_COUNT
+        mac $_AddMap_MapMac
+        write 0 $COMM_CELL $COMM_LOAD_ID
+        write 1 $COMM_CELL $COMM_LOAD_BUSY
+    end
+end
+
+#draw one sprite of a tile
+defmac DrawTileSprite sprite
+    op add @counter @counter sprite
+    jump DrawWIs always
+    jump DrawWAnd always
+
+    jump DrawNBaba always
+    jump DrawNFlag always
+    jump DrawNWall always
+    jump DrawNRock always
+    jump DrawNWater always
+    jump DrawNSkull always
+    jump DrawNLava always
+    jump DrawNGrass always
+    jump DrawNSkye always
+    jump DrawNKey always
+    jump DrawNDoor always
+
+    jump DrawPYou always
+    jump DrawPWin always
+    jump DrawPStop always
+    jump DrawPPush always
+    jump DrawPSink always
+    jump DrawPDefeat always
+    jump DrawPHot always
+    jump DrawPMelt always
+    jump DrawPOpen always
+    jump DrawPShut always
+
+    jump DrawOBaba always
+    jump DrawOFlag always
+    jump DrawOWall always
+    jump DrawORock always
+    jump DrawOWater always
+    jump DrawOSkull always
+    jump DrawOLava always
+    jump DrawOGrass always
+    jump DrawOSkye always
+    jump DrawOKey always
+    jump DrawODoor always
+    jump DrawOTile always
+    jump DrawOBrick always
+
+    DrawOBaba:
+        draw col $COLOR_O_BABA
+        draw scale 1 0.5
+        draw poly 10 20 8 8
+        draw scale 1 2
+        draw line 5 8 4 4
+        draw line 8 8 7 4
+        draw line 15 8 16 4
+        draw line 12 8 13 4
+        draw line 11 13 10 15
+        draw line 13 13 12 15
+        draw col $COLOR_BLACK
+        draw poly 15 11 8 1 
+        draw poly 13 10 8 1 
+    jump End always
+    DrawOFlag:
+        draw col $COLOR_O_FLAG
+        draw line 4 2 8 2
+        draw line 6 2 6 18
+        draw triangle 7 10 14 14 7 18
+    jump End always
+    DrawOWall:
+        draw col $COLOR_O_WALL
+        draw rect 0 0 20 11
+        draw rect 0 0 1 12
+        draw rect 19 0 1 12
+        draw rect 0 13 20 6
+        draw rect 1 12 18 8
+        draw col $COLOR_BLACK
+        draw lineRect 2 14 16 4
+        draw rect 0 3 20 1
+        draw rect 0 7 20 1
+        draw rect 10 0 1 3
+        draw rect 5 4 1 3
+        draw rect 15 4 1 3
+        draw rect 10 8 1 3
+    jump End always
+    DrawORock:
+        draw col $COLOR_O_ROCK
+        draw poly 10 10 8 9
+    jump End always
+    DrawOWater:
+        draw col $COLOR_O_WATER
+        draw rect 0 1 20 18
+        draw rect 1 0 18 20
+    jump End always
+    DrawOSkull:
+        draw col $COLOR_O_SKULL
+        draw rect 2 9 16 5
+        draw rect 3 7 14 9
+        draw rect 4 6 12 11
+        draw rect 6 17 8 1
+        draw rect 6 3 2 3
+        draw rect 9 3 2 3
+        draw rect 12 3 2 3
+        draw col $COLOR_BLACK
+        draw rect 6 11 3 3
+        draw rect 11 11 3 3
+        draw line 10 8 10 10
+    jump End always
+    DrawOLava:
+        draw col $COLOR_O_LAVA
+        draw rect 0 1 20 18
+        draw rect 1 0 18 20
+    jump End always
+    DrawOGrass:
+        draw col $COLOR_O_GRASS
+        draw rect 2 4 2 4
+        draw rect 7 11 2 4
+        draw rect 15 17 2 3
+        draw rect 4 7 2 3
+        draw rect 7 0 2 3
+        draw rect 8 6 2 3
+        draw rect 6 10 2 3
+        draw rect 10 5 2 3
+        draw rect 11 10 2 3
+        draw rect 16 8 2 3
+        draw rect 17 2 2 3
+        draw rect 8 15 4 2
+        draw rect 2 10 2 2
+        draw rect 13 8 2 2
+        draw rect 14 6 2 2
+        draw rect 16 13 2 2
+        draw rect 3 17 3 2
+        draw rect 13 1 3 2
+        draw rect 0 13 2 3
+    jump End always
+    DrawOSkye:
+        draw col $COLOR_O_SKYE_LIGHT
+        draw line 5 6 4 2
+        draw line 8 6 7 2
+        draw line 15 6 16 2
+        draw line 12 6 13 2
+        draw poly 15 13 8 3
+        draw triangle 4 12 3 16 1 12
+        draw col $COLOR_O_SKYE_DARK
+        draw scale 1 0.5
+        draw poly 10 16 8 8
+        draw scale 1 2
+        draw triangle 12 13 15 16 12 18
+        draw triangle 18 13 15 16 18 18
+        draw triangle 2 8 5 10 1 12
+        draw triangle 4 12 5 10 1 12
+        draw col $COLOR_BLACK
+        draw poly 17 13 8 1
+        draw poly 14 13 8 1 
+    jump End always
+    DrawOKey:
+        draw col $COLOR_O_KEY
+        draw scale 1 2
+        draw linePoly 5 5 10 3
+        draw scale 1 0.5
+        draw line 8 10 18 10
+        draw line 14 10 14 6
+        draw line 18 10 18 6
+    jump End always
+    DrawODoor:
+        draw col $COLOR_O_DOOR
+        draw poly 10 10 16 10
+        draw rect 0 0 20 10
+        draw col $COLOR_BLACK
+        draw poly 10 10 16 8
+        draw rect 2 0 16 10
+        draw col $COLOR_O_DOOR
+        draw poly 10 10 16 7
+        draw rect 3 0 14 10
+        draw col $COLOR_BLACK
+        draw poly 14 8 8 2
+    jump End always
+    DrawOTile:
+        draw col $COLOR_O_TILE
+        draw lineRect 1 1 18 18
+        draw rect 3 3 14 14
+    jump End always
+    DrawOBrick:
+        draw col $COLOR_O_BRICK
+        draw rect 6 0 8 4
+        draw rect 1 5 8 4
+        draw rect 11 5 8 4
+        draw rect 0 10 4 4
+        draw rect 6 10 8 4
+        draw rect 16 10 4 4
+        draw rect 1 15 8 4
+    jump End always
+
+    DrawNBaba:
+        draw col $COLOR_N_BABA
+        mac LETTER_B 0 1
+        mac LETTER_A 1 1
+        mac LETTER_B 0 0
+        mac LETTER_A 1 0
+    jump End always
+    DrawNFlag:
+        draw col $COLOR_N_FLAG
+        mac LETTER_F 0 1
+        mac LETTER_L 1 1
+        mac LETTER_A 0 0
+        mac LETTER_G 1 0
+    jump End always
+    DrawNWall:
+        draw col $COLOR_N_WALL
+        mac LETTER_W 0 1
+        mac LETTER_A 1 1
+        mac LETTER_L 0 0
+        mac LETTER_L 1 0
+    jump End always
+    DrawNRock:
+        draw col $COLOR_N_ROCK
+        mac LETTER_R 0 1
+        mac LETTER_O 1 1
+        mac LETTER_C 0 0
+        mac LETTER_K 1 0
+    jump End always
+    DrawNWater:
+        draw col $COLOR_N_WATER
+        mac LETTER_W 0 1
+        mac LETTER_A 1 1
+        draw line 4 1 4 9
+        draw line 1 9 7 9
+        draw line 9 1 13 1
+        draw line 9 1 9 9
+        draw line 13 9 9 9
+        draw line 9 5 11 5
+        draw line 15 1 15 9
+        draw line 15 5 18 5
+        draw line 15 9 18 9
+        draw line 19 6 19 8
+        draw line 19 1 19 4
+    jump End always
+    DrawNSkull:
+        draw col $COLOR_N_SKULL
+        mac LETTER_S 0 1
+        mac LETTER_K 1 1
+        draw line 1 2 1 9
+        draw line 2 1 6 1
+        draw line 7 2 7 9
+        draw line 9 1 9 9
+        draw line 9 1 13 1
+        draw line 15 1 15 9
+        draw line 15 1 19 1
+    jump End always
+    DrawNLava:
+        draw col $COLOR_N_LAVA
+        mac LETTER_L 0 1
+        mac LETTER_A 1 1
+        mac LETTER_V 0 0
+        mac LETTER_A 1 0
+    jump End always
+    DrawNGrass:
+        draw col $COLOR_N_GRASS
+        mac LETTER_G 0 1
+        mac LETTER_R 1 1
+        draw line 1 1 4 9
+        draw line 7 1 4 9
+        draw line 3 5 5 5
+        draw line 9 1 12 1
+        draw line 13 2 13 4
+        draw line 10 5 12 5
+        draw line 9 6 9 8
+        draw line 10 9 13 9
+        draw line 15 1 18 1
+        draw line 19 2 19 4
+        draw line 16 5 18 5
+        draw line 15 6 15 8
+        draw line 16 9 19 9
+    jump End always
+    DrawNSkye:
+        draw col $COLOR_N_SKYE_LIGHT
+        mac LETTER_S 0 1
+        mac LETTER_K 1 1
+        draw col $COLOR_N_SKYE_DARK
+        mac LETTER_Y 0 0
+        mac LETTER_E 1 0
+    jump End always
+    DrawNKey:
+        draw col $COLOR_N_KEY
+        draw line 1 7 1 13
+        draw line 1 10 5 13
+        draw line 1 10 5 7
+        draw line 8 7 8 13
+        draw line 8 7 12 7
+        draw line 8 13 12 13
+        draw line 8 10 11 10
+        draw line 17 7 17 11
+        draw line 17 11 15 13
+        draw line 17 11 19 13
+    jump End always
+    DrawNDoor:
+        draw col $COLOR_N_DOOR
+        mac LETTER_D 0 1
+        mac LETTER_O 1 1
+        mac LETTER_O 0 0
+        mac LETTER_R 1 0
+    jump End always
+
+    DrawPYou:
+        draw col $COLOR_P_YOU
+        draw rect 0 1 20 18
+        draw rect 1 0 18 20
+        draw col $COLOR_BLACK
+        draw line 3 6 3 10
+        draw line 1 14 3 10
+        draw line 5 14 3 10
+        draw line 8 6 11 6
+        draw line 7 7 7 13
+        draw line 12 7 12 13
+        draw line 8 14 11 14
+        draw line 15 6 18 6
+        draw line 14 7 14 14
+        draw line 19 7 19 14
+    jump End always
+    DrawPWin:
+        draw col $COLOR_P_WIN
+        draw rect 0 1 20 18
+        draw rect 1 0 18 20
+        draw col $COLOR_BLACK
+        draw line 1 14 3 6
+        draw line 5 14 3 6
+        draw line 5 14 7 6
+        draw line 9 14 7 6
+        draw line 11 14 11 6
+        draw line 13 6 13 14
+        draw line 13 14 19 6
+        draw line 19 14 19 6
+    jump End always
+    DrawPStop:
+        draw col $COLOR_P_STOP
+        draw rect 0 1 20 18
+        draw rect 1 0 18 20
+        draw col $COLOR_BLACK
+        mac LETTER_S 0 1
+        mac LETTER_T 1 1
+        mac LETTER_O 0 0
+        mac LETTER_P 1 0
+    jump End always
+    DrawPPush:
+        draw col $COLOR_P_PUSH
+        draw rect 0 1 20 18
+        draw rect 1 0 18 20
+        draw col $COLOR_BLACK
+        mac LETTER_P 0 1
+        mac LETTER_U 1 1
+        mac LETTER_S 0 0
+        mac LETTER_H 1 0
+    jump End always
+    DrawPSink:
+        draw col $COLOR_P_SINK
+        draw rect 0 1 20 18
+        draw rect 1 0 18 20
+        draw col $COLOR_BLACK
+        mac LETTER_S 0 1
+        mac LETTER_I 1 1
+        mac LETTER_N 0 0
+        mac LETTER_K 1 0
+    jump End always
+    DrawPDefeat:
+        draw col $COLOR_P_DEFEAT
+        draw rect 0 1 20 18
+        draw rect 1 0 18 20
+        draw col $COLOR_BLACK
+        draw line 1 11 1 19
+        draw line 1 11 5 11
+        draw line 1 19 5 19
+        draw line 6 12 6 18
+        draw line 8 19 12 19
+        draw line 8 11 12 11
+        draw line 8 11 8 19
+        draw line 8 15 11 15
+        draw line 14 11 14 19
+        draw line 14 19 19 19
+        draw line 15 15 18 15
+        draw line 1 1 1 9
+        draw line 1 1 5 1
+        draw line 1 9 5 9
+        draw line 1 5 4 5
+        draw line 7 1 10 9
+        draw line 13 1 10 9
+        draw line 9 5 11 5
+        draw line 17 1 17 9
+        draw line 15 9 19 9
+    jump End always
+    DrawPHot:
+        draw col $COLOR_P_HOT
+        draw rect 0 1 20 18
+        draw rect 1 0 18 20
+        draw col $COLOR_BLACK
+        draw line 1 6 1 14
+        draw line 6 6 6 14
+        draw line 1 10 6 10
+        draw line 9 6 12 6
+        draw line 9 14 12 14
+        draw line 8 7 8 13
+        draw line 13 7 13 13
+        draw line 15 14 19 14
+        draw line 15 14 19 14
+        draw line 17 6 17 14
+    jump End always
+    DrawPMelt:
+        draw col $COLOR_P_MELT
+        draw rect 0 1 20 18
+        draw rect 1 0 18 20
+        draw col $COLOR_BLACK
+        mac LETTER_M 0 1
+        mac LETTER_E 1 1
+        mac LETTER_L 0 0
+        mac LETTER_T 1 0
+    jump End always
+    DrawPOpen:
+        draw col $COLOR_P_OPEN
+        draw rect 0 1 20 18
+        draw rect 1 0 18 20
+        draw col $COLOR_BLACK
+        mac LETTER_O 0 1
+        mac LETTER_P 1 1
+        mac LETTER_E 0 0
+        mac LETTER_N 1 0
+    jump End always
+    DrawPShut:
+        draw col $COLOR_P_SHUT
+        draw rect 0 1 20 18
+        draw rect 1 0 18 20
+        draw col $COLOR_BLACK
+        mac LETTER_S 0 1
+        mac LETTER_H 1 1
+        mac LETTER_U 0 0
+        mac LETTER_T 1 0
+    jump End always
+
+    DrawWIs:
+        draw col $COLOR_WHITE
+        draw line 3 3 9 3
+        draw line 3 17 9 17
+        draw line 6 3 6 17
+        draw line 11 3 16 3
+        draw line 17 4 17 9
+        draw line 12 10 16 10
+        draw line 11 11 11 16
+        draw line 12 17 17 17
+    jump End always
+    DrawWAnd:
+        draw col $COLOR_WHITE
+        draw line 1 7 4 13
+        draw line 7 7 4 13
+        draw line 2 10 6 10
+        draw line 9 7 9 13
+        draw line 13 7 9 13
+        draw line 13 7 13 13
+        draw line 15 7 18 7
+        draw line 15 7 15 13
+        draw line 15 13 18 13
+        draw line 19 8 19 12
+    End:
+end
+
+#draw a tile to a position
+defmac DrawTile tile x y
+    op mul lx x $tileSize
+    op add lx lx $DISPLAY_BORDER
+    op add lx lx $tileBorderX
+    op mul ly y $tileSize
+    op add ly ly $DISPLAY_BORDER
+    op add ly ly $tileBorderY
+    op div size $tileSize 20
+    op add size size 0.025
+    draw translate lx ly
+    draw scale size size
+    draw image 10 10 @empty 20
+    DrawLoop:
+        op log logSprite tile
+        jump ExitLoop strictEqual logSprite null
+        op idiv sprite logSprite $LOG2
+        mac DrawTileSprite sprite
+        op shl remBit 1 sprite
+        op xor tile tile remBit
+    jump DrawLoop notEqual tile 0
+    ExitLoop:
+    draw reset
+    drawflush $DISPLAY
+end
+
+#read data from the render queue, waiting until something is found
+defmac ReadRenderQueue tile x y
+    Wait:
+    read writePointer $COMM_CELL $COMM_RENDER_WRITE_POINTER
+    read readPointer $COMM_CELL $COMM_RENDER_READ_POINTER
+    jump Wait equal writePointer readPointer
+    read tile $RENDER_TILE_CELL readPointer
+    read x $RENDER_X_CELL readPointer
+    read y $RENDER_Y_CELL readPointer
+    op add readPointer readPointer 1
+    op mod readPointer readPointer $RENDER_BUFFER_SIZE
+    write readPointer $COMM_CELL $COMM_RENDER_READ_POINTER
+end
+
+#write data to the render queue, waiting until space is availible 
+defmac WriteRenderQueue tile x y
+    Wait:
+    read writePointer $COMM_CELL $COMM_RENDER_WRITE_POINTER
+    read readPointer $COMM_CELL $COMM_RENDER_READ_POINTER
+    op add writeCheck writePointer 1
+    op mod writeCheck writeCheck $RENDER_BUFFER_SIZE
+    jump Wait equal readPointer writeCheck
+    write tile $RENDER_TILE_CELL writePointer
+    write x $RENDER_X_CELL writePointer
+    write y $RENDER_Y_CELL writePointer
+    write writeCheck $COMM_CELL $COMM_RENDER_WRITE_POINTER
+end
+
+#read items from the render queue and draw them to the screen
+defmac DrawRenderQueue
+    Loop:
+        mac ReadRenderQueue tile x y
+        jump NoClear notEqual tile -1
+            draw clear 64 64 64
+            read $MAP_SIZE_X $COMM_CELL $COMM_LOAD_SIZE_X
+            read $MAP_SIZE_Y $COMM_CELL $COMM_LOAD_SIZE_Y
+            op idiv tileSizeX $DISPLAY_SIZE $MAP_SIZE_X
+            op idiv tileSizeY $DISPLAY_SIZE $MAP_SIZE_Y
+            op min $tileSize tileSizeX tileSizeY
+            op mul $tileBorderX $MAP_SIZE_X $tileSize
+            op sub $tileBorderX $DISPLAY_SIZE $tileBorderX
+            op div $tileBorderX $tileBorderX 2
+            op mul $tileBorderY $MAP_SIZE_Y $tileSize
+            op sub $tileBorderY $DISPLAY_SIZE $tileBorderY
+            op div $tileBorderY $tileBorderY 2
+        jump Loop always
+        NoClear:
+        mac DrawTile tile x y
+    jump Loop always
+end
+
+#send a tile render request to the renderer
+defmac QueueRenderTile idx
+    mac IdxXY x y idx
+    mac GetTileIdx tile idx
+    mac WriteRenderQueue tile x y
+end
+
+#get the cell index of a tile (x, y)
+defmac GetIdx idx x y
+    op mul idx y $MAP_SIZE_X
+    op add idx idx x
+end
+
+#get the (x, y) position of a cell index
+defmac IdxXY x y idx
+    op idiv y idx $MAP_SIZE_X
+    op mod x idx $MAP_SIZE_X
+end
+
+#get the tile at an index
+defmac GetTileIdx tile idx
+    read tile $MAP_CELL idx
+end
+
+#get the tile at a position
+defmac GetTile tile x y
+    mac GetIdx idx x y
+    mac GetTileIdx tile idx
+end
+
+defmac GetTileSafe tile x y
+    jump Edge greaterThanEq x $MAP_SIZE_X
+    jump Edge greaterThanEq y $MAP_SIZE_Y
+    jump Edge lessThan x 0
+    jump Edge lessThan y 0
+    mac GetTile tile x y
+    jump NoEdge always
+    Edge:
+    set tile null
+    NoEdge:
+end
+
+defmac SetTileIdx tile idx
+    write tile $MAP_CELL idx
+    mac QueueRenderTile idx
+end
+
+#set the tile at a position
+defmac SetTile tile x y
+    mac GetIdx idx x y
+    mac SetTileIdx tile idx
+end
+
+#set the tile at an index, enabling reparse if text is changed
+defmac SetTileSpecialIdx tile idx
+    mac GetTileIdx oldTile idx
+    mac SetTileIdx tile idx
+    op xor changes tile oldTile
+    op and textChanges changes $WORD_MASK
+    jump NoTextChange equal textChanges 0
+        set $textChanged true
+    NoTextChange:
+end
+
+#set the tile at a position, enabling reparse if text is changed
+defmac SetTileSpecial tile x y
+    mac GetIdx idx x y
+    mac SetTileSpecialIdx tile idx
+end
+
+#reset the map to nothing
+defmac ClearMap
+    set i 0
+    Loop:
+        write 0 $MAP_CELL i
+    op add i i 1
+    jump Loop lessThan i $MAP_AREA
+    mac WriteRenderQueue -1 0 0
+end
+
+#clear the current tracked cells
+defmac ClearCounts
+    set i 0
+    Loop:
+        write 0 $OBJECT_COUNT_CELL i
+    op add i i 1
+    jump Loop lessThan i $OBJECT_COUNT
+end
+
+#takes in a tile with many objects, and decrements their counts
+defmac ObjectCountDec tile
+    jump End equal tile 0
+    Loop:
+        op log objectNum tile
+        op idiv objectNum objectNum $LOG2
+        read count $OBJECT_COUNT_CELL objectNum
+            op sub count count 1
+        write count $OBJECT_COUNT_CELL objectNum
+        op shl remBit 1 objectNum
+        op xor tile tile remBit
+    jump Loop notEqual tile 0
+    End:
+end
+
+#takes in a tile with many objects, and increments their counts
+defmac ObjectCountInc tile
+    jump End equal tile 0
+    Loop:
+        op log objectNum tile
+        op idiv objectNum objectNum $LOG2
+        read count $OBJECT_COUNT_CELL objectNum
+            op add count count 1
+        write count $OBJECT_COUNT_CELL objectNum
+        op shl remBit 1 objectNum
+        op xor tile tile remBit
+    jump Loop notEqual tile 0
+    End:
+end
+
+#process the map initially
+defmac InitProcessMap
+    mac WriteRenderQueue -1 0 0
+    set i 0
+    Loop:
+        mac IdxXY x y i
+        mac GetTileIdx tile i
+        mac WriteRenderQueue tile x y
+        mac ObjectCountInc tile
+    op add i i 1
+    jump Loop lessThan i $MAP_AREA
+    set i 0
+end
+
+defmac Init
+    setrate 1000
+    if equal $DEBUG false
+        setrule mapArea _ 0 0 20 23
+    end
+    #reset the state of the switches on build
+    control enabled $SWITCH_U false
+    control enabled $SWITCH_D false
+    control enabled $SWITCH_L false
+    control enabled $SWITCH_R false
+    control enabled $SWITCH_RESET false
+    read $MAP_SIZE_X $COMM_CELL $COMM_LOAD_SIZE_X
+    read $MAP_SIZE_Y $COMM_CELL $COMM_LOAD_SIZE_Y
+    set $reloadMap true
+    set $currentMap 1
+end
+
+#read inputs from the user
+defmac ReadInput dx dy
+    sensor state $SWITCH_U @enabled
+    jump Up equal state true
+    sensor state $SWITCH_D @enabled
+    jump Down equal state true
+    sensor state $SWITCH_L @enabled
+    jump Left equal state true
+    sensor state $SWITCH_R @enabled
+    jump Right equal state true
+    jump Else always
+    Up:
+        set dx 0
+        set dy 1
+    jump End always
+    Down:
+        set dx 0
+        set dy -1
+    jump End always
+    Left:
+        set dx -1
+        set dy 0
+    jump End always
+    Right:
+        set dx 1
+        set dy 0
+    jump End always
+    Else:
+        set dx null
+    End:
+end
+
+#iterate the map, parsing all text
+defmac ParseMap
+    jump NoParse equal $textChanged false
+    mac ResetPropFlags
+    set $nounSwapPointer 0
+    set i 0
+    Loop:
+        mac ParseTile i
+    op add i i 1
+    jump Loop lessThan i $MAP_AREA
+    set $textChanged false
+    NoParse:
+end
+
+#Attempt to parse a single tile
+defmac ParseTile idx
+    read tile $MAP_CELL idx
+    op and noun tile $NOUN_MASK
+    jump End equal noun 0
+        set dx 1
+        set dy 0
+        ParseRepeat:
+            mac IdxXY x y idx
+            op add opX x dx
+            op add opY y dy
+            CheckOp:
+            mac GetTileSafe opTile opX opY
+            op and and opTile $W_AND
+            jump NoAnd equal and 0
+                op add checkX opX dx
+                op add checkY opY dy
+                mac GetTileSafe checkTile checkX checkY
+                op and checkNoun checkTile $NOUN_MASK
+                jump Exit equal checkNoun 0
+                op add opX checkX dx
+                op add opY checkY dy
+                jump CheckOp always
+            NoAnd:
+            op and is opTile $W_IS 
+            jump NoIs equal is 0
+                CheckProp:
+                op shl object noun $NOUN_OBJECT_SHIFT
+                op add propX opX dx
+                op add propY opY dy
+                mac GetTileSafe propTile propX propY
+                op and prop propTile $PROP_MASK
+                jump NoProp equal prop 0
+                    op shr propIndex prop $PROPERTY_INDEX_SHIFT
+                    op log propIndex propIndex
+                    op idiv propIndex propIndex $LOG2
+                    mac SetPropFlag object propIndex
+                    jump PropSuccess always
+                NoProp:
+                op and propNoun propTile $NOUN_MASK
+                jump NoNoun equal propNoun 0
+                    jump NotSameNoun notEqual noun propNoun
+                        mac SetPropFlag object $PROP_NOSWAP
+                        jump PropSuccess always
+                    NotSameNoun:
+                        op shl objectDst propNoun $NOUN_OBJECT_SHIFT
+                        write object $NOUN_SWAP_CELL_SRC $nounSwapPointer
+                        write objectDst $NOUN_SWAP_CELL_DST $nounSwapPointer
+                        op add $nounSwapPointer $nounSwapPointer 1
+                PropSuccess:
+                    op add opX propX dx
+                    op add opY propY dy
+                    mac GetTileSafe opTile opX opY
+                    op and and opTile $W_AND
+                    jump CheckProp notEqual and 0
+                NoNoun:
+            NoIs:
+            Exit:
+            op sub dx dx 1
+            op sub dy dy 1
+        jump ParseRepeat equal dx 0
+    End:
+end
+
+#reset all properties
+defmac ResetPropFlags
+    set i 0
+    Loop:
+        write 0 $PROP_CELL i
+    op add i i 1
+    jump Loop lessThan i $PROP_COUNT
+    write $WORD_MASK $PROP_CELL $PROP_PUSH
+end
+
+#give an object a property
+defmac SetPropFlag object prop
+    read propMask $PROP_CELL prop
+    op or propMask propMask object 
+    write propMask $PROP_CELL prop
+end
+
+#get mask of objects with a property
+defmac GetPropFlag propMask prop
+    read propMask $PROP_CELL prop
+end
+
+#iterate the map swapping nouns via noun is noun definitions
+defmac SwapNouns
+    jump End equal $nounSwapPointer 0
+    set nounPointer $nounSwapPointer
+    Loop:
+        op sub nounPointer nounPointer 1
+        read swapSrc $NOUN_SWAP_CELL_SRC nounPointer
+        mac GetPropFlag propMask $PROP_NOSWAP
+        op and noSwap swapSrc propMask
+        jump NoSwap notEqual noSwap 0
+            op log srcID swapSrc
+            op div srcID srcID $LOG2
+            read srcCount $OBJECT_COUNT_CELL srcID
+            jump NoSwap equal srcCount 0
+            read swapDst $NOUN_SWAP_CELL_DST nounPointer
+            op log dstID swapDst
+            op div dstID dstID $LOG2
+            mac SwapNoun swapSrc swapDst srcID dstID
+        NoSwap:
+    jump Loop notEqual nounPointer 0
+    mac ClearMapChangeCell
+    End:
+end
+
+#iterate over $MAP_CHANGE_CELL clearing it
+defmac ClearMapChangeCell
+    set i 0
+    Loop:
+        write 0 $MAP_CHANGE_CELL i
+    op add i i 1
+    jump Loop lessThan i $MAP_AREA
+end
+
+#iterate the map, swapping any instance of src with dst
+defmac SwapNoun src dst srcID dstID
+    set idx 0
+    Loop:
+        read tile $MAP_CELL idx
+        op and hasSrc tile src
+        jump NoSrc equal hasSrc 0
+            read changedTile $MAP_CHANGE_CELL idx
+            op and hasChanged changedTile src
+            jump NoSrc notEqual hasChanged 0
+
+            read srcCount $OBJECT_COUNT_CELL srcID
+            op sub srcCount srcCount 1
+            write srcCount $OBJECT_COUNT_CELL srcID
+
+            op and hasDst tile dst
+            jump SkipInc notEqual hasDst 0
+                read dstCount $OBJECT_COUNT_CELL dstID
+                op add dstCount dstCount 1
+                write dstCount $OBJECT_COUNT_CELL dstID
+            SkipInc:
+
+            op xor tile tile src
+            op or tile tile dst
+            op or changedTile changedTile dst
+            write tile $MAP_CELL idx
+            write changedTile $MAP_CHANGE_CELL idx
+            mac QueueRenderTile idx
+        NoSrc:
+    op add idx idx 1
+    jump Loop lessThan idx $MAP_AREA
+end
+
+#iterate the map, moving YOU objects, and pushing PUSH objects
+defmac ExecYou dx dy
+    mac GetPropFlag propMask $PROP_YOU
+    jump NoProp equal propMask 0
+        #set ranYou false
+        mac GetPropFlag stopMask $PROP_STOP
+        mac GetPropFlag pushMask $PROP_PUSH
+        mac GetPropFlag openMask $PROP_OPEN
+        mac GetPropFlag shutMask $PROP_SHUT
+        op mul xInc dx -1
+        op mul yInc dy -1
+        op or xInc xInc 1
+        op or yInc yInc 1
+        set xEnd -1
+        op sub xStart $MAP_SIZE_X 2
+        jump NotCondX greaterThan dx 0
+          set xEnd $MAP_SIZE_X
+          op mul xStart dx -1
+        NotCondX:
+        set yEnd -1
+        op sub y $MAP_SIZE_Y 2
+        jump NotCondY greaterThan dy 0
+          set yEnd $MAP_SIZE_Y
+          op mul y dy -1
+        NotCondY:
+        set x xStart
+        Loop:
+            mac GetIdx tileIdx x y
+            mac GetTileIdx tile tileIdx
+            op and yous tile propMask
+            jump NoYou equal yous 0
+                set pushCount 0
+                set prevTile tile
+                op add endX x dx
+                op add endY y dy
+                mac GetTile endTile endX endY
+                op and isPush endTile pushMask
+                jump NoPush equal isPush 0
+                PushCountLoop:
+                    set prevTile endTile
+                    op add pushCount pushCount 1
+                    op add endX endX dx
+                    op add endY endY dy
+                    mac GetTileSafe endTile endX endY
+                    jump EndLoop strictEqual endTile null
+                    op and wasOpen prevTile openMask
+                    op and wasShut prevTile shutMask
+                    op and isOpen endTile openMask
+                    op and isShut endTile shutMask
+                    op land case1 wasOpen isShut
+                    op land case2 wasShut isOpen
+                    op or skipPushCheck case1 case2
+                    jump NoPush equal skipPushCheck true
+                    op and isPush endTile pushMask
+                    jump PushCountLoop notEqual isPush 0
+                NoPush:
+                op and wasOpen prevTile openMask
+                op and wasShut prevTile shutMask
+                op and isOpen endTile openMask
+                op and isShut endTile shutMask
+                op land case1 wasOpen isShut
+                op land case2 wasShut isOpen
+                op or skipStopCheck case1 case2
+                jump NoStopCheck equal skipStopCheck true
+                op and isStop endTile stopMask
+                jump EndLoop notEqual isStop 0
+                NoStopCheck:
+                jump NoPushOP equal pushCount 0
+                PushOPLoop:
+                    op sub startX endX dx
+                    op sub startY endY dy
+                    mac GetTile startTile startX startY
+                    op and startPushes startTile pushMask
+                    op or endTile endTile startPushes
+                    mac SetTileSpecial endTile endX endY
+                    op xor endTile startTile startPushes
+                    set endX startX
+                    set endY startY
+                op sub pushCount pushCount 1
+                jump PushOPLoop greaterThan pushCount 0
+                NoPushOP:
+                op xor tile tile yous
+                op and objectOverlap endTile yous
+                op or endTile endTile yous
+                mac SetTileSpecialIdx tile tileIdx
+                mac SetTileSpecial endTile endX endY
+                mac ObjectCountDec objectOverlap
+                #set ranYou true
+            NoYou:
+            EndLoop:
+        op add x x xInc
+        jump Loop notEqual x xEnd 
+        set x xStart
+        op add y y yInc
+        jump Loop notEqual y yEnd
+        #jump NoSound equal ranYou false
+            #playsound false @sfx-boom 1 1
+        NoSound:
+    NoProp:
+end
+
+defmac ExecWin
+    read youMask $PROP_CELL $PROP_YOU
+    jump NoProp equal youMask 0
+    read winMask $PROP_CELL $PROP_WIN
+    jump NoProp equal winMask 0
+        set idx 0
+        Loop:
+            read tile $MAP_CELL idx
+            op and wins tile winMask
+            jump NoWin equal wins 0
+            op and yous tile youMask
+            jump NoWin equal yous 0
+                op mod $currentMap $currentMap $MAP_COUNT
+                op add $currentMap $currentMap 1
+                set $reloadMap true
+                playsound false @sfx-unlock 1 1
+                jump NoProp always
+            NoWin:
+        op add idx idx 1
+        jump Loop lessThan idx $MAP_AREA
+    NoProp:
+end
+
+defmac ExecSink
+    read propMask $PROP_CELL $PROP_SINK
+    jump NoProp equal propMask 0
+        set playSound false
+        set idx 0
+        Loop:
+            read tile $MAP_CELL idx
+            op and sink tile propMask
+            jump NoSink equal sink 0
+                op log msb tile
+                op idiv msb msb $LOG2
+                op shl msb 1 msb
+                op xor tileRemainder tile msb
+                jump NoSink equal tileRemainder 0
+                mac SetTileSpecialIdx 0 idx
+                mac ObjectCountDec tile
+                set playSound true
+            NoSink:
+        op add idx idx 1
+        jump Loop lessThan idx $MAP_AREA
+        jump NoProp equal playSound false
+        playsound false @sfx-splash 1 1.5
+    NoProp:
+end
+
+defmac ExecDefeat
+    read youMask $PROP_CELL $PROP_YOU
+    jump NoProp equal youMask 0
+    read defeatMask $PROP_CELL $PROP_DEFEAT
+    jump NoProp equal defeatMask 0
+        set playSound false
+        set idx 0
+        Loop:
+            read tile $MAP_CELL idx
+            op and defeat tile defeatMask
+            jump NoDefeat equal defeat 0
+            op and yous tile youMask
+            jump NoDefeat equal yous 0
+            op xor tile tile yous
+            write tile $MAP_CELL idx
+            mac ObjectCountDec yous
+            mac QueueRenderTile idx
+            set playSound true
+            NoDefeat:
+        op add idx idx 1
+        jump Loop lessThan idx $MAP_AREA
+        jump NoProp equal playSound false
+        playsound false @sfx-bigshot 1 1
+    NoProp:
+end
+
+defmac ExecHot
+    read hotMask $PROP_CELL $PROP_HOT
+    jump NoProp equal hotMask 0
+    read meltMask $PROP_CELL $PROP_MELT
+    jump NoProp equal meltMask 0
+        set playSound false
+        set idx 0
+        Loop:
+            read tile $MAP_CELL idx
+            op and melts tile meltMask
+            jump NoHot equal melts 0
+            op and hots tile hotMask
+            jump NoHot equal hots 0
+            op xor tile tile melts
+            write tile $MAP_CELL idx
+            mac ObjectCountDec melts
+            mac QueueRenderTile idx
+            set playSound true
+            NoHot:
+        op add idx idx 1
+        jump Loop lessThan idx $MAP_AREA
+        jump NoProp equal playSound false
+        playsound false @sfx-flame 1 1
+    NoProp:
+end
+
+defmac ExecShut
+    read shutMask $PROP_CELL $PROP_SHUT
+    jump NoProp equal shutMask 0
+    read openMask $PROP_CELL $PROP_OPEN
+    jump NoProp equal openMask 0
+        set playSound false
+        set idx 0
+        Loop:
+            read tile $MAP_CELL idx
+            op and shuts tile shutMask
+            jump NoShut equal shuts 0
+            op and opens tile openMask
+            jump NoShut equal opens 0
+            Repeat:
+            op log msShutNum shuts
+            op idiv msShutNum msShutNum $LOG2
+            op pow msShut 2 msShutNum
+            op log msOpenNum opens
+            op idiv msOpenNum msOpenNum $LOG2
+            op pow msOpen 2 msOpenNum
+            op or remBits msOpen msShut
+            op xor tile tile remBits
+            write tile $MAP_CELL idx
+            read count $OBJECT_COUNT_CELL msOpenNum
+            op sub count count 1
+            write count $OBJECT_COUNT_CELL msOpenNum
+            read count $OBJECT_COUNT_CELL msShutNum
+            op sub count count 1
+            write count $OBJECT_COUNT_CELL msShutNum
+            op xor shuts shuts msShut
+            op xor opens opens msOpen
+            op land shouldRepeat opens shuts
+            jump Repeat equal shouldRepeat true
+            mac QueueRenderTile idx
+            set playSound true
+            NoShut:
+        op add idx idx 1
+        jump Loop lessThan idx $MAP_AREA
+        jump NoProp equal playSound false
+        playsound false @sfx-door 1 1
+    NoProp:
+end
+
+#execute properties
+defmac ExecProp dx dy
+    mac ExecYou dx dy
+    mac ExecSink
+    mac ExecHot
+    mac ExecDefeat
+    mac ExecShut
+    mac ExecWin
+end
+
+#process one game step
+defmac GameStep dx dy
+    mac ParseMap
+    mac SwapNouns
+    mac ExecProp dx dy
+end
+
+defmac Update
+    WaitMove:
+        sensor reset $SWITCH_RESET @enabled
+        jump NoReload equal reset $reloadMap
+            #op add $currentMap $currentMap 1
+            mac LoadMap $currentMap
+            set $reloadMap false
+            control enabled $SWITCH_RESET false
+        NoReload:
+        mac ReadInput dx dy
+    jump WaitMove strictEqual dx null
+    mac GameStep dx dy
+    control enabled $SWITCH_U false
+    control enabled $SWITCH_D false
+    control enabled $SWITCH_L false
+    control enabled $SWITCH_R false
+end
+
+defmac Main
+    mac Init
+    Loop:
+        mac Update
+    jump Loop always
+end
+
+#generate the schematic
+defmac Schem
+    block $MAP_CELL @world-cell 18 0
+    block $MAP_CHANGE_CELL @world-cell 19 0
+    block $PROP_CELL @world-cell 18 1
+    block $NOUN_SWAP_CELL_SRC @world-cell 19 1
+    block $NOUN_SWAP_CELL_DST @world-cell 18 2
+    block $OBJECT_COUNT_CELL @world-cell 19 2
+    block $COMM_CELL @world-cell 18 3
+    block $RENDER_TILE_CELL @world-cell 19 3
+    block $RENDER_X_CELL @world-cell 18 4
+    block $RENDER_Y_CELL @world-cell 19 4
+    pset $RENDER_BUFFER_SIZE 512
+
+    block $MESSAGE @world-message 10 2
+
+    block $SWITCH_L @world-switch 5 1
+    block $SWITCH_R @world-switch 7 1
+    block $SWITCH_U @world-switch 6 2
+    block $SWITCH_D @world-switch 6 0
+    block $SWITCH_RESET @world-switch 10 0
+
+    mac CreateDisplay $DISPLAY $DISPLAY_SIZE $DISPLAY_BORDER 0 3 16
+end
+
+#create a tiled display
+defmac CreateDisplay display displaySize displayBorder x y size
+    pset displayBorder 6
+    pop mul displaySize size 32
+    pop sub displaySize displaySize displayBorder
+    pop sub displaySize displaySize displayBorder
+    for range dispX size
+        pop add dispX dispX x
+        for range dispY size
+            pop add dispY dispY y
+            block display @tile-logic-display dispX dispY
+        end
+    end
+end 
+
+mac Schem
+
+import levels/map0.sfmlog
+import levels/map1.sfmlog
+import levels/map2.sfmlog
+import levels/map3.sfmlog
+import levels/map4.sfmlog
+import levels/map5.sfmlog
+import levels/map6.sfmlog
+import levels/map7.sfmlog
+import levels/lake1.sfmlog
+import levels/lake2.sfmlog
+import levels/lake4.sfmlog
+import levels/lake5.sfmlog
+import levels/lake6.sfmlog
+import levels/lake7.sfmlog
+import levels/lake8.sfmlog
+import levels/lake9.sfmlog
+import levels/lake10.sfmlog
+import levels/lake11.sfmlog
+import levels/lake12.sfmlog
+import levels/lake13.sfmlog
+import levels/lakeE1.sfmlog
+import levels/lakeE2.sfmlog
+import levels/credits.sfmlog
+
+#main proc
+proc _ @world-processor 18 5
+    mac Main
+end
+
+#render proc
+proc _ @world-processor 19 5
+    setrate 1000
+    mac DrawRenderQueue
+end

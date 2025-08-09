@@ -1,0 +1,58 @@
+defmac MapInit
+    mac LoadSize 15 8
+
+    mac LoadTile $N_WALL 0 0
+    mac LoadTile $W_IS 1 0
+    mac LoadTile $N_BABA 2 5
+    mac LoadTile $P_STOP 2 0
+    mac LoadTile $O_BABA 3 6
+    mac LoadTile $W_IS 3 5
+    mac LoadTile $O_WALL 3 0
+    mac LoadTile $P_YOU 4 5
+    mac LoadTile $O_WALL 4 3
+    mac LoadTile $O_WALL 4 2
+    mac LoadTile $O_SKYE 4 1
+    mac LoadTile $O_WALL 4 0
+    mac LoadTile $O_WALL 5 3
+    mac LoadTile $O_SKYE 5 1
+    mac LoadTile $O_WALL 6 3
+    mac LoadTile $O_FLAG 6 1
+    mac LoadTile $O_WALL 7 3
+    mac LoadTile $O_WALL 8 7
+    mac LoadTile $O_ROCK 8 6
+    mac LoadTile $O_WALL 8 5
+    mac LoadTile $O_WALL 8 4
+    mac LoadTile $O_WALL 8 3
+    mac LoadTile $O_WALL 8 2
+    mac LoadTile $O_WALL 8 1
+    mac LoadTile $O_WALL 8 0
+    mac LoadTile $O_WALL 9 7
+    mac LoadTile $O_WALL 10 7
+    mac LoadTile $N_ROCK 10 1
+    mac LoadTile $O_WALL 11 7
+    mac LoadTile $N_SKYE 11 6
+    mac LoadTile $O_WALL 11 5
+    mac LoadTile $O_WALL 11 4
+    mac LoadTile $O_WALL 11 3
+    mac LoadTile $W_IS 11 1
+    mac LoadTile $O_WALL 12 7
+    mac LoadTile $N_FLAG 12 6
+    mac LoadTile $W_IS 12 5
+    mac LoadTile $P_DEFEAT 12 4
+    mac LoadTile $O_WALL 12 3
+    mac LoadTile $P_PUSH 12 1
+    mac LoadTile $O_WALL 13 7
+    mac LoadTile $W_IS 13 5
+    mac LoadTile $P_WIN 13 4
+    mac LoadTile $O_WALL 13 3
+    mac LoadTile $O_WALL 14 7
+    mac LoadTile $O_WALL 14 6
+    mac LoadTile $O_WALL 14 5
+    mac LoadTile $O_WALL 14 4
+    mac LoadTile $O_WALL 14 3
+    mac LoadTile $O_WALL 14 2
+    mac LoadTile $O_WALL 14 1
+    mac LoadTile $O_WALL 14 0
+end
+
+mac AddMap MapInit

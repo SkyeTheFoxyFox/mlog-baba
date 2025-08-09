@@ -1,0 +1,73 @@
+defmac MapInit
+    mac LoadSize 24 14
+
+    mac LoadTile $N_FLAG 0 13
+    mac LoadTile $N_BABA 0 12
+    mac LoadTile $W_IS 1 13
+    mac LoadTile $W_IS 1 12
+    mac LoadTile $P_WIN 2 13
+    mac LoadTile $P_YOU 2 12
+    mac LoadTile $N_ROCK 2 8
+    mac LoadTile $W_IS 3 8
+    mac LoadTile $O_SKULL 3 4
+    mac LoadTile $O_SKULL 3 3
+    mac LoadTile $O_SKULL 3 2
+    mac LoadTile $O_SKULL 3 1
+    mac LoadTile $O_SKULL 3 0
+    mac LoadTile $P_PUSH 4 8
+    mac LoadTile $O_SKULL 4 4
+    mac LoadTile $O_SKULL 5 6
+    mac LoadTile $O_SKULL 5 5
+    mac LoadTile $O_SKULL 5 4
+    mac LoadTile $O_ROCK 6 5
+    mac LoadTile $O_ROCK 6 4
+    mac LoadTile $O_ROCK 6 3
+    mac LoadTile $O_BABA 6 1
+    mac LoadTile $O_SKULL 7 6
+    mac LoadTile $O_SKULL 7 5
+    mac LoadTile $O_SKULL 7 4
+    mac LoadTile $O_SKULL 8 4
+    mac LoadTile $O_SKULL 9 4
+    mac LoadTile $O_SKULL 9 3
+    mac LoadTile $O_SKULL 9 2
+    mac LoadTile $O_SKULL 9 1
+    mac LoadTile $O_SKULL 9 0
+    mac LoadTile $O_SKULL 13 10
+    mac LoadTile $O_SKULL 13 9
+    mac LoadTile $O_SKULL 13 8
+    mac LoadTile $O_SKULL 13 7
+    mac LoadTile $O_SKULL 13 6
+    mac LoadTile $O_SKULL 13 5
+    mac LoadTile $O_SKULL 13 4
+    mac LoadTile $O_SKULL 13 3
+    mac LoadTile $O_SKULL 13 2
+    mac LoadTile $O_SKULL 14 10
+    mac LoadTile $O_SKULL 14 2
+    mac LoadTile $O_SKULL 15 10
+    mac LoadTile $N_SKULL 15 8
+    mac LoadTile $W_IS 15 7
+    mac LoadTile $P_DEFEAT 15 6
+    mac LoadTile $O_SKULL 15 2
+    mac LoadTile $O_SKULL 16 10
+    mac LoadTile $O_SKULL 16 2
+    mac LoadTile $O_SKULL 17 10
+    mac LoadTile $O_SKULL 17 2
+    mac LoadTile $O_SKULL 18 10
+    mac LoadTile $O_FLAG 18 4
+    mac LoadTile $O_SKULL 18 2
+    mac LoadTile $O_SKULL 19 10
+    mac LoadTile $O_SKULL 19 2
+    mac LoadTile $O_SKULL 20 10
+    mac LoadTile $O_SKULL 20 2
+    mac LoadTile $O_SKULL 21 10
+    mac LoadTile $O_SKULL 21 9
+    mac LoadTile $O_SKULL 21 8
+    mac LoadTile $O_SKULL 21 7
+    mac LoadTile $O_SKULL 21 6
+    mac LoadTile $O_SKULL 21 5
+    mac LoadTile $O_SKULL 21 4
+    mac LoadTile $O_SKULL 21 3
+    mac LoadTile $O_SKULL 21 2
+end
+
+mac AddMap MapInit

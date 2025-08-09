@@ -1,0 +1,42 @@
+defmac MapInit
+    mac LoadSize 15 8
+
+    mac LoadTile $O_WALL 0 1
+    mac LoadTile $N_BABA 0 0
+    mac LoadTile $O_GRASS 1 5
+    mac LoadTile $O_WALL 1 1
+    mac LoadTile $W_IS 1 0
+    mac LoadTile $O_WALL 2 1
+    mac LoadTile $P_YOU 2 0
+    mac LoadTile $O_BABA 3 4
+    mac LoadTile $O_WALL 3 1
+    mac LoadTile $O_WALL 3 0
+    mac LoadTile $O_GRASS 4 0
+    mac LoadTile $O_WALL 5 7
+    mac LoadTile $O_WALL 6 7
+    mac LoadTile $N_ROCK 6 6
+    mac LoadTile $N_FLAG 6 2
+    mac LoadTile $O_WALL 7 7
+    mac LoadTile $W_IS 7 6
+    mac LoadTile $O_FLAG 7 4
+    mac LoadTile $W_IS 7 2
+    mac LoadTile $O_WALL 8 7
+    mac LoadTile $N_ROCK 8 6
+    mac LoadTile $N_ROCK 8 2
+    mac LoadTile $O_WALL 9 7
+    mac LoadTile $O_WALL 11 1
+    mac LoadTile $O_WALL 11 0
+    mac LoadTile $O_WALL 12 1
+    mac LoadTile $N_FLAG 12 0
+    mac LoadTile $O_GRASS 13 7
+    mac LoadTile $O_WALL 13 1
+    mac LoadTile $W_IS 13 0
+    mac LoadTile $O_GRASS 14 6
+    mac LoadTile $N_WALL 14 4
+    mac LoadTile $W_IS 14 3
+    mac LoadTile $P_STOP 14 2
+    mac LoadTile $O_WALL 14 1
+    mac LoadTile $P_WIN 14 0
+end
+
+mac AddMap MapInit

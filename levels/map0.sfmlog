@@ -1,0 +1,73 @@
+defmac MapInit
+    mac LoadSize 21 13
+
+    mac LoadTile $N_BABA 5 10
+    mac LoadTile $O_WALL 5 8
+    mac LoadTile $O_TILE 5 7
+    mac LoadTile $O_TILE 5 6
+    mac LoadTile $O_TILE 5 5
+    mac LoadTile $O_WALL 5 4
+    mac LoadTile $N_WALL 5 2
+    mac LoadTile $W_IS 6 10
+    mac LoadTile $O_WALL 6 8
+    mac LoadTile $O_TILE 6 7
+    mac LoadTile $O_BABA 6 6
+    mac LoadTile $O_TILE 6 5
+    mac LoadTile $O_WALL 6 4
+    mac LoadTile $W_IS 6 2
+    mac LoadTile $P_YOU 7 10
+    mac LoadTile $O_WALL 7 8
+    mac LoadTile $O_TILE 7 7
+    mac LoadTile $O_TILE 7 6
+    mac LoadTile $O_TILE 7 5
+    mac LoadTile $O_WALL 7 4
+    mac LoadTile $P_STOP 7 2
+    mac LoadTile $O_WALL 8 8
+    mac LoadTile $O_TILE 8 7
+    mac LoadTile $O_TILE 8 6
+    mac LoadTile $O_TILE 8 5
+    mac LoadTile $O_WALL 8 4
+    mac LoadTile $O_WALL 9 8
+    mac LoadTile $O_TILE 9 7
+    mac LoadTile $O_TILE 9 6
+    mac LoadTile $O_TILE 9 5
+    mac LoadTile $O_WALL 9 4
+    mac LoadTile $O_WALL 10 8
+    mac LoadTile $O_ROCK 10 7
+    mac LoadTile $O_ROCK 10 6
+    mac LoadTile $O_ROCK 10 5
+    mac LoadTile $O_WALL 10 4
+    mac LoadTile $O_WALL 11 8
+    mac LoadTile $O_TILE 11 7
+    mac LoadTile $O_TILE 11 6
+    mac LoadTile $O_TILE 11 5
+    mac LoadTile $O_WALL 11 4
+    mac LoadTile $O_WALL 12 8
+    mac LoadTile $O_TILE 12 7
+    mac LoadTile $O_TILE 12 6
+    mac LoadTile $O_TILE 12 5
+    mac LoadTile $O_WALL 12 4
+    mac LoadTile $N_FLAG 13 10
+    mac LoadTile $O_WALL 13 8
+    mac LoadTile $O_TILE 13 7
+    mac LoadTile $O_TILE 13 6
+    mac LoadTile $O_TILE 13 5
+    mac LoadTile $O_WALL 13 4
+    mac LoadTile $N_ROCK 13 2
+    mac LoadTile $W_IS 14 10
+    mac LoadTile $O_WALL 14 8
+    mac LoadTile $O_TILE 14 7
+    mac LoadTile $O_FLAG 14 6
+    mac LoadTile $O_TILE 14 5
+    mac LoadTile $O_WALL 14 4
+    mac LoadTile $W_IS 14 2
+    mac LoadTile $P_WIN 15 10
+    mac LoadTile $O_WALL 15 8
+    mac LoadTile $O_TILE 15 7
+    mac LoadTile $O_TILE 15 6
+    mac LoadTile $O_TILE 15 5
+    mac LoadTile $O_WALL 15 4
+    mac LoadTile $P_PUSH 15 2
+end
+
+mac AddMap MapInit

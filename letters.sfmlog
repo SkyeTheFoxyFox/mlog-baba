@@ -1,0 +1,179 @@
+
+defmac LETTER_LINE x1 y1 x2 y2 x y
+    pop mul lx x 10
+    pop mul ly y 10
+    pop add lx1 x1 lx
+    pop add lx2 x2 lx
+    pop add ly1 y1 ly
+    pop add ly2 y2 ly
+    draw line lx1 ly1 lx2 ly2
+end
+
+defmac LETTER_A x y
+    mac LETTER_LINE 1 1 5 9 x y
+    mac LETTER_LINE 9 1 5 9 x y
+    mac LETTER_LINE 3 4 7 4 x y
+end
+
+defmac LETTER_B x y
+    mac LETTER_LINE 1 1 1 9 x y
+    mac LETTER_LINE 1 1 8 1 x y
+    mac LETTER_LINE 1 5 8 5 x y
+    mac LETTER_LINE 1 9 8 9 x y
+    mac LETTER_LINE 9 2 9 4 x y
+    mac LETTER_LINE 9 6 9 8 x y
+end
+
+defmac LETTER_C x y
+    mac LETTER_LINE 2 1 9 1 x y
+    mac LETTER_LINE 1 2 1 8 x y
+    mac LETTER_LINE 2 9 9 9 x y
+end
+
+defmac LETTER_D x y
+    mac LETTER_LINE 1 1 8 1 x y
+    mac LETTER_LINE 1 2 1 8 x y
+    mac LETTER_LINE 1 9 8 9 x y
+    mac LETTER_LINE 9 2 9 8 x y
+end
+
+defmac LETTER_E x y
+    mac LETTER_LINE 1 1 9 1 x y
+    mac LETTER_LINE 1 2 1 8 x y
+    mac LETTER_LINE 1 9 9 9 x y
+    mac LETTER_LINE 1 5 6 5 x y
+end
+
+defmac LETTER_F x y
+    mac LETTER_LINE 1 1 1 9 x y
+    mac LETTER_LINE 1 5 8 5 x y
+    mac LETTER_LINE 1 9 9 9 x y
+end
+
+defmac LETTER_G x y
+    mac LETTER_LINE 2 1 8 1 x y
+    mac LETTER_LINE 1 2 1 8 x y
+    mac LETTER_LINE 2 9 9 9 x y
+    mac LETTER_LINE 9 2 9 5 x y
+    mac LETTER_LINE 6 5 9 5 x y
+end
+
+defmac LETTER_H x y
+    mac LETTER_LINE 1 1 1 9 x y
+    mac LETTER_LINE 9 1 9 9 x y
+    mac LETTER_LINE 1 5 9 5 x y
+end
+
+defmac LETTER_I x y
+    mac LETTER_LINE 1 1 9 1 x y
+    mac LETTER_LINE 1 9 9 9 x y
+    mac LETTER_LINE 5 1 5 9 x y
+end
+
+defmac LETTER_J x y
+    mac LETTER_LINE 1 2 1 4 x y
+    mac LETTER_LINE 2 1 8 1 x y
+    mac LETTER_LINE 9 2 9 9 x y
+end
+
+defmac LETTER_K x y
+    mac LETTER_LINE 1 1 1 9 x y
+    mac LETTER_LINE 1 5 9 9 x y
+    mac LETTER_LINE 1 5 9 1 x y
+end
+
+defmac LETTER_L x y
+    mac LETTER_LINE 1 1 1 9 x y
+    mac LETTER_LINE 1 1 9 1 x y
+end
+
+defmac LETTER_M x y
+    mac LETTER_LINE 1 1 1 9 x y
+    mac LETTER_LINE 9 1 9 9 x y
+    mac LETTER_LINE 1 9 5 5 x y
+    mac LETTER_LINE 9 9 5 5 x y
+end
+
+defmac LETTER_N x y
+    mac LETTER_LINE 1 1 1 9 x y
+    mac LETTER_LINE 9 1 9 9 x y
+    mac LETTER_LINE 9 1 1 9 x y
+end
+
+defmac LETTER_O x y
+    mac LETTER_LINE 1 2 1 8 x y
+    mac LETTER_LINE 2 1 8 1 x y
+    mac LETTER_LINE 9 2 9 8 x y
+    mac LETTER_LINE 2 9 8 9 x y
+end
+
+defmac LETTER_P x y
+    mac LETTER_LINE 1 1 1 9 x y
+    mac LETTER_LINE 1 9 8 9 x y
+    mac LETTER_LINE 1 5 8 5 x y
+    mac LETTER_LINE 9 6 9 8 x y
+end
+
+defmac LETTER_Q x y
+    mac LETTER_LINE 1 2 1 8 x y
+    mac LETTER_LINE 2 1 8 1 x y
+    mac LETTER_LINE 9 2 9 8 x y
+    mac LETTER_LINE 2 9 8 9 x y
+    mac LETTER_LINE 6 4 9 1 x y
+end
+
+defmac LETTER_R x y
+    mac LETTER_LINE 1 1 1 9 x y
+    mac LETTER_LINE 1 9 8 9 x y
+    mac LETTER_LINE 1 5 8 5 x y
+    mac LETTER_LINE 9 6 9 8 x y
+    mac LETTER_LINE 9 1 9 4 x y
+end
+
+defmac LETTER_S x y
+    mac LETTER_LINE 1 1 8 1 x y
+    mac LETTER_LINE 2 5 8 5 x y
+    mac LETTER_LINE 2 9 9 9 x y
+    mac LETTER_LINE 1 6 1 8 x y
+    mac LETTER_LINE 9 2 9 4 x y
+end
+
+defmac LETTER_T x y
+    mac LETTER_LINE 1 9 9 9 x y
+    mac LETTER_LINE 5 1 5 9 x y
+end
+
+defmac LETTER_U x y
+    mac LETTER_LINE 1 2 1 9 x y
+    mac LETTER_LINE 9 2 9 9 x y
+    mac LETTER_LINE 2 1 8 1 x y
+end
+
+defmac LETTER_V x y
+    mac LETTER_LINE 5 1 1 9 x y
+    mac LETTER_LINE 5 1 9 9 x y
+end
+
+defmac LETTER_W x y
+    mac LETTER_LINE 1 9 3 1 x y
+    mac LETTER_LINE 5 9 3 1 x y
+    mac LETTER_LINE 5 9 7 1 x y
+    mac LETTER_LINE 9 9 7 1 x y
+end
+
+defmac LETTER_X x y
+    mac LETTER_LINE 1 1 9 9 x y
+    mac LETTER_LINE 1 9 9 1 x y
+end
+
+defmac LETTER_Y x y
+    mac LETTER_LINE 5 1 5 5 x y
+    mac LETTER_LINE 5 5 1 9 x y
+    mac LETTER_LINE 5 5 9 9 x y
+end
+
+defmac LETTER_Z x y
+    mac LETTER_LINE 1 1 9 1 x y
+    mac LETTER_LINE 1 9 9 9 x y
+    mac LETTER_LINE 1 1 9 9 x y
+end
