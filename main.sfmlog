@@ -43,7 +43,6 @@ defmac LoadMap id
         print "Congratulations, you win :3\n\nThanks for playing my\nMLOG remake of BABA is YOU\n\nCreated by SkyeTheFoxyFox"
         draw col $COLOR_WHITE
         pop div displayCenter $DISPLAY_SIZE 2
-        pop add displayCenter displayCenter $DISPLAY_BORDER
         strvar unscoped center "center"
         draw print displayCenter displayCenter center
         drawflush $DISPLAY
@@ -528,10 +527,8 @@ end
 #draw a tile to a position
 defmac DrawTile tile x y
     op mul lx x $tileSize
-    op add lx lx $DISPLAY_BORDER
     op add lx lx $tileBorderX
     op mul ly y $tileSize
-    op add ly ly $DISPLAY_BORDER
     op add ly ly $tileBorderY
     op div size $tileSize 20
     op add size size 0.025
@@ -1066,7 +1063,7 @@ defmac ExecWin
                 op mod $currentMap $currentMap $MAP_COUNT
                 op add $currentMap $currentMap 1
                 set $reloadMap true
-                playsound false @sfx-unlock 1 1
+                playsound false @sfx-uiUnlock 10 1
                 jump NoProp always
             NoWin:
         op add idx idx 1
@@ -1095,7 +1092,7 @@ defmac ExecSink
         op add idx idx 1
         jump Loop lessThan idx $MAP_AREA
         jump NoProp equal playSound false
-        playsound false @sfx-splash 1 1.5
+        playsound false @sfx-stepWater 1 1.5
     NoProp:
 end
 
@@ -1121,7 +1118,7 @@ defmac ExecDefeat
         op add idx idx 1
         jump Loop lessThan idx $MAP_AREA
         jump NoProp equal playSound false
-        playsound false @sfx-bigshot 1 1
+        playsound false @sfx-unitExplode1 1 1.5
     NoProp:
 end
 
@@ -1147,7 +1144,8 @@ defmac ExecHot
         op add idx idx 1
         jump Loop lessThan idx $MAP_AREA
         jump NoProp equal playSound false
-        playsound false @sfx-flame 1 1
+        playsound false @sfx-explosion 10 1
+        playsound false @sfx-explosionCrawler 1 1
     NoProp:
 end
 
@@ -1190,7 +1188,7 @@ defmac ExecShut
         op add idx idx 1
         jump Loop lessThan idx $MAP_AREA
         jump NoProp equal playSound false
-        playsound false @sfx-door 1 1
+        playsound false @sfx-waveSpawn 10 2
     NoProp:
 end
 
@@ -1258,11 +1256,11 @@ defmac Schem
     block $SWITCH_D @world-switch 6 0
     block $SWITCH_RESET @world-switch 10 0
 
-    mac CreateDisplay $DISPLAY $DISPLAY_SIZE $DISPLAY_BORDER 0 3 16
+    mac CreateDisplay $DISPLAY $DISPLAY_SIZE 0 3 16
 end
 
 #create a tiled display
-defmac CreateDisplay display displaySize displayBorder x y size
+defmac CreateDisplay display displaySize x y size
     pset displayBorder 6
     pop mul displaySize size 32
     pop sub displaySize displaySize displayBorder

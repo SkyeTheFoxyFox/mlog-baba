@@ -1,4 +1,4 @@
-pset $DEBUG true
+pset $DEBUG false
 
 #Memory Addresses
 pset $COMM_LOAD_BUSY 0
